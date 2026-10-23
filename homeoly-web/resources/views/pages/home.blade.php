@@ -89,9 +89,10 @@
         <div class="absolute top-[20.7%] left-[50.6%] w-[20.8%] h-[4.7%] rounded-2xl cursor-pointer z-30" onmouseenter="pauseCardAutoplay(); highlightSlotCard(2, true)" onmouseleave="resumeCardAutoplay(); highlightSlotCard(2, false)" onclick="openBooking('Online & Chamber Care')" title="Online & Chamber Care"></div>
         <div class="absolute top-[20.7%] left-[72.5%] w-[20.8%] h-[4.7%] rounded-2xl cursor-pointer z-30" onmouseenter="pauseCardAutoplay(); highlightSlotCard(3, true)" onmouseleave="resumeCardAutoplay(); highlightSlotCard(3, false)" onclick="openBooking('Medicine Home Delivery')" title="Medicine Home Delivery"></div>
 
-        <!-- 9. Doctor Dashboard App Hotspot -->
-        <a href="javascript:void(0)" onclick="openBooking('Homeoly Mobile App')" title="Mobile App Consultation" class="absolute top-[30.5%] left-[9.5%] w-[45%] h-[9.5%] rounded-3xl cursor-pointer hover:ring-2 hover:ring-primary/40 transition z-30"></a>
-        <a href="javascript:void(0)" onclick="openBooking('Doctor Dashboard Portal')" title="Doctor Portal" class="absolute top-[38.5%] right-[9.5%] w-[16%] h-[1.2%] rounded-xl cursor-pointer hover:bg-primary/10 transition z-30"></a>
+        <!-- 9. Doctor Dashboard Section Feature Icons Hotspots (Image has no click action) -->
+        <div class="absolute top-[34.9%] left-[61.18%] w-[4.43%] h-[1.01%] rounded-xl cursor-pointer z-30" onmouseenter="setDocIconHover(1, true)" onmouseleave="setDocIconHover(1, false)" title="Live Doctor Monitoring"></div>
+        <div class="absolute top-[37.4%] left-[61.18%] w-[4.43%] h-[1.01%] rounded-xl cursor-pointer z-30" onmouseenter="setDocIconHover(2, true)" onmouseleave="setDocIconHover(2, false)" title="Patient Scheduling & Management"></div>
+        <div class="absolute top-[39.9%] left-[61.18%] w-[4.43%] h-[1.01%] rounded-xl cursor-pointer z-30" onmouseenter="setDocIconHover(3, true)" onmouseleave="setDocIconHover(3, false)" title="Instant Digital Prescription"></div>
 
         <!-- 10. Digital Prescription Interactive Steps (1, 2, 3, 4) with Hover Highlights -->
         <div class="absolute top-[50.4%] left-[25.2%] w-[5.5%] h-[1.3%] rounded-2xl cursor-pointer z-30 hover-glow" onmouseenter="activateStep(1)" onmouseleave="resetStep()" onclick="activateStep(1); openBooking('Step 1: Patient Health History')" title="Step 1"></div>
@@ -505,7 +506,27 @@
         }, 1000);
     });
 
-    // 5. Digital Prescription Steps 1, 2, 3, 4 Active State
+    // 5. Doctor Dashboard Feature Icons Hover
+    function setDocIconHover(iconIndex, isHover) {
+        const svgDoc = getSvgDoc();
+        if (!svgDoc) return;
+        const iconGroup = svgDoc.getElementById('doc_feature_icon_' + iconIndex);
+        if (!iconGroup) return;
+
+        const rect = iconGroup.querySelector('rect');
+        const paths = iconGroup.querySelectorAll('path');
+
+        if (isHover) {
+            if (rect) rect.setAttribute('fill', '#00A746');
+            paths.forEach(p => p.setAttribute('fill', '#FFFFFF'));
+            iconGroup.style.transform = 'scale(1.08)';
+            iconGroup.style.transformOrigin = 'center';
+        } else {
+            if (rect) rect.setAttribute('fill', '#E6F6ED');
+            paths.forEach(p => p.setAttribute('fill', '#00A746'));
+            iconGroup.style.transform = 'scale(1)';
+        }
+    }
     function activateStep(stepNum) {
         const svgDoc = getSvgDoc();
         if (!svgDoc) return;
