@@ -84,10 +84,10 @@
         <div class="absolute top-[22.7%] left-[1.2%] w-[3.5%] h-[0.9%] rounded-full cursor-pointer z-30" onmouseenter="setHealthArrowHover('left', true)" onmouseleave="setHealthArrowHover('left', false)" onclick="scrollHealthcareLeft()" title="Scroll Previous"></div>
         <div class="absolute top-[22.7%] right-[1.2%] w-[3.5%] h-[0.9%] rounded-full cursor-pointer z-30" onmouseenter="setHealthArrowHover('right', true)" onmouseleave="setHealthArrowHover('right', false)" onclick="scrollHealthcareRight()" title="Scroll Next"></div>
 
-        <div class="absolute top-[20.7%] left-[6.7%] w-[20.8%] h-[4.7%] rounded-2xl cursor-pointer z-30 hover-glow" onmouseenter="pauseCardAutoplay(); activateHealthCard(0)" onmouseleave="resumeCardAutoplay(); resetHealthCard()" onclick="openBooking('100% Side-effect Free Treatment')" title="Side-effect Free Treatment"></div>
-        <div class="absolute top-[20.7%] left-[28.6%] w-[20.8%] h-[4.7%] rounded-2xl cursor-pointer z-30 hover-glow" onmouseenter="pauseCardAutoplay(); activateHealthCard(1)" onmouseleave="resumeCardAutoplay(); resetHealthCard()" onclick="openBooking('Comprehensive Health Records')" title="Comprehensive Health Records"></div>
-        <div class="absolute top-[20.7%] left-[50.6%] w-[20.8%] h-[4.7%] rounded-2xl cursor-pointer z-30 hover-glow" onmouseenter="pauseCardAutoplay(); activateHealthCard(2)" onmouseleave="resumeCardAutoplay(); resetHealthCard()" onclick="openBooking('Online & Chamber Care')" title="Online & Chamber Care"></div>
-        <div class="absolute top-[20.7%] left-[72.5%] w-[20.8%] h-[4.7%] rounded-2xl cursor-pointer z-30 hover-glow" onmouseenter="pauseCardAutoplay(); activateHealthCard(3)" onmouseleave="resumeCardAutoplay(); resetHealthCard()" onclick="openBooking('Medicine Home Delivery')" title="Medicine Home Delivery"></div>
+        <div class="absolute top-[20.7%] left-[6.7%] w-[20.8%] h-[4.7%] rounded-2xl cursor-pointer z-30" onmouseenter="pauseCardAutoplay(); highlightSlotCard(0, true)" onmouseleave="resumeCardAutoplay(); highlightSlotCard(0, false)" onclick="openBooking('100% Side-effect Free Treatment')" title="Side-effect Free Treatment"></div>
+        <div class="absolute top-[20.7%] left-[28.6%] w-[20.8%] h-[4.7%] rounded-2xl cursor-pointer z-30" onmouseenter="pauseCardAutoplay(); highlightSlotCard(1, true)" onmouseleave="resumeCardAutoplay(); highlightSlotCard(1, false)" onclick="openBooking('Comprehensive Health Records')" title="Comprehensive Health Records"></div>
+        <div class="absolute top-[20.7%] left-[50.6%] w-[20.8%] h-[4.7%] rounded-2xl cursor-pointer z-30" onmouseenter="pauseCardAutoplay(); highlightSlotCard(2, true)" onmouseleave="resumeCardAutoplay(); highlightSlotCard(2, false)" onclick="openBooking('Online & Chamber Care')" title="Online & Chamber Care"></div>
+        <div class="absolute top-[20.7%] left-[72.5%] w-[20.8%] h-[4.7%] rounded-2xl cursor-pointer z-30" onmouseenter="pauseCardAutoplay(); highlightSlotCard(3, true)" onmouseleave="resumeCardAutoplay(); highlightSlotCard(3, false)" onclick="openBooking('Medicine Home Delivery')" title="Medicine Home Delivery"></div>
 
         <!-- 9. Doctor Dashboard App Hotspot -->
         <a href="javascript:void(0)" onclick="openBooking('Homeoly Mobile App')" title="Mobile App Consultation" class="absolute top-[30.5%] left-[9.5%] w-[45%] h-[9.5%] rounded-3xl cursor-pointer hover:ring-2 hover:ring-primary/40 transition z-30"></a>
@@ -398,26 +398,41 @@
             const cardBg = svgDoc.getElementById('health_card_bg_' + i);
             if (!cardGroup) continue;
 
-            // Compute circular slot position (0 = Slot 0, 1 = Slot 1 [Active], 2 = Slot 2, 3 = Slot 3)
+            // Compute circular slot position (0, 1, 2, 3)
             const currentSlot = (i - cardShiftIndex % 4 + 4) % 4;
             const shiftCount = currentSlot - i;
             const translateX = shiftCount * CARD_STEP_X;
 
-            // When shifting, cards enter smoothly from the right
             cardGroup.style.transition = animated ? 'transform 0.75s cubic-bezier(0.34, 1.25, 0.64, 1), opacity 0.5s ease' : 'none';
             cardGroup.style.transform = `translateX(${translateX}px)`;
             cardGroup.style.opacity = '1';
 
-            // Slot 1 (Position of "ব্যাপক স্বাস্থ্য নথি") is ALWAYS the Active Card:
-            // Gets active green background (#D9F2E3) AND premium subtle drop shadow filter!
+            // Slot 1 is the currently active/centered card in the carousel
+            // Only the card in Slot 1 gets active green color; all others are normal #F9F9F9
             if (cardBg) {
-                if (currentSlot === 1) {
-                    cardBg.setAttribute('fill', '#D9F2E3');
-                    cardBg.setAttribute('filter', 'url(#active_card_shadow)');
-                } else {
-                    cardBg.setAttribute('fill', '#F9F9F9');
-                    cardBg.removeAttribute('filter');
+                cardBg.setAttribute('fill', currentSlot === 1 ? '#D9F2E3' : '#F9F9F9');
+            }
+        }
+    }
+
+    // Highlight whichever card is currently sitting in a slot when hovered
+    function highlightSlotCard(slotIndex, isHover) {
+        const svgDoc = getSvgDoc();
+        if (!svgDoc) return;
+
+        for (let i = 0; i < 4; i++) {
+            const currentSlot = (i - cardShiftIndex % 4 + 4) % 4;
+            if (currentSlot === slotIndex) {
+                const cardBg = svgDoc.getElementById('health_card_bg_' + i);
+                if (cardBg) {
+                    if (isHover) {
+                        cardBg.setAttribute('fill', '#D9F2E3');
+                    } else {
+                        // Return to normal (Slot 1 remains active green, others normal #F9F9F9)
+                        cardBg.setAttribute('fill', currentSlot === 1 ? '#D9F2E3' : '#F9F9F9');
+                    }
                 }
+                break;
             }
         }
     }
@@ -445,14 +460,6 @@
             leftArrow.setAttribute('fill', '#00A746');
             setTimeout(() => leftArrow.setAttribute('fill', '#D0D0D0'), 300);
         }
-    }
-
-    function activateHealthCard(index) {
-        // Direct hover on card temporarily highlights it
-        const svgDoc = getSvgDoc();
-        if (!svgDoc) return;
-        const cardBg = svgDoc.getElementById('health_card_bg_' + index);
-        if (cardBg) cardBg.setAttribute('fill', '#D9F2E3');
     }
 
     function resetHealthCard() {
