@@ -20,10 +20,10 @@ Thumbs.db
 .vscode/
 .idea/
 
-# Scratch & backup files
-*.py
-*.php
-*.html
-*.blade.php
-cleaned_structure.svg
-extracted_images/
+# Scratch & backup files in root
+/*.py
+/*.php
+/*.html
+/*.blade.php
+/cleaned_structure.svg
+/extracted_images/
