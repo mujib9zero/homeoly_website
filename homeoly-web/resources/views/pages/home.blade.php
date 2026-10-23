@@ -77,15 +77,17 @@
         <!-- 5. Hero Section: Mouse Scroll Button (Below Hero section) -->
         <a href="javascript:void(0)" onclick="smoothScrollTo('healthcare-section')" title="Scroll Down" class="absolute top-[13.0%] left-[47.8%] w-[4.5%] h-[1.4%] rounded-full cursor-pointer hover:scale-105 transition z-30"></a>
 
-        <!-- 7. Healthcare Carousel Cards (Horizontal Scroll & Hover active states) -->
+        <!-- 7. Healthcare Carousel Cards (Horizontal Continuous Auto-Scroll & Hover active states) -->
         <div id="healthcare-section" class="absolute top-[20.7%] left-[6.7%] w-[86.6%] h-[4.7%] z-20 pointer-events-none"></div>
-        <div class="absolute top-[20.7%] left-[6.7%] w-[20.8%] h-[4.7%] rounded-2xl cursor-pointer z-30 hover-glow" onmouseenter="activateHealthCard(0)" onmouseleave="resetHealthCard()" onclick="activateHealthCard(0); openBooking('100% Side-effect Free Treatment')" title="Side-effect Free Treatment"></div>
-        <div class="absolute top-[20.7%] left-[28.6%] w-[20.8%] h-[4.7%] rounded-2xl cursor-pointer z-30 hover-glow" onmouseenter="activateHealthCard(1)" onmouseleave="resetHealthCard()" onclick="activateHealthCard(1); openBooking('Comprehensive Health Records')" title="Comprehensive Health Records"></div>
-        <div class="absolute top-[20.7%] left-[50.6%] w-[20.8%] h-[4.7%] rounded-2xl cursor-pointer z-30 hover-glow" onmouseenter="activateHealthCard(2)" onmouseleave="resetHealthCard()" onclick="activateHealthCard(2); openBooking('Online & Chamber Care')" title="Online & Chamber Care"></div>
-        <div class="absolute top-[20.7%] left-[72.5%] w-[20.8%] h-[4.7%] rounded-2xl cursor-pointer z-30 hover-glow" onmouseenter="activateHealthCard(3)" onmouseleave="resetHealthCard()" onclick="activateHealthCard(3); openBooking('Medicine Home Delivery')" title="Medicine Home Delivery"></div>
 
-        <!-- 8. Healthcare Carousel Arrow Button (Right) -->
-        <div class="absolute top-[22.7%] right-[1.2%] w-[3.5%] h-[0.9%] rounded-full cursor-pointer hover:scale-110 transition z-30" onclick="scrollHealthcareRight()" title="Scroll Healthcare Cards"></div>
+        <!-- Carousel Arrow Buttons: Left & Right -->
+        <div class="absolute top-[22.7%] left-[1.2%] w-[3.5%] h-[0.9%] rounded-full cursor-pointer z-30" onmouseenter="setHealthArrowHover('left', true)" onmouseleave="setHealthArrowHover('left', false)" onclick="scrollHealthcareLeft()" title="Scroll Previous"></div>
+        <div class="absolute top-[22.7%] right-[1.2%] w-[3.5%] h-[0.9%] rounded-full cursor-pointer z-30" onmouseenter="setHealthArrowHover('right', true)" onmouseleave="setHealthArrowHover('right', false)" onclick="scrollHealthcareRight()" title="Scroll Next"></div>
+
+        <div class="absolute top-[20.7%] left-[6.7%] w-[20.8%] h-[4.7%] rounded-2xl cursor-pointer z-30 hover-glow" onmouseenter="pauseCardAutoplay(); activateHealthCard(0)" onmouseleave="resumeCardAutoplay(); resetHealthCard()" onclick="openBooking('100% Side-effect Free Treatment')" title="Side-effect Free Treatment"></div>
+        <div class="absolute top-[20.7%] left-[28.6%] w-[20.8%] h-[4.7%] rounded-2xl cursor-pointer z-30 hover-glow" onmouseenter="pauseCardAutoplay(); activateHealthCard(1)" onmouseleave="resumeCardAutoplay(); resetHealthCard()" onclick="openBooking('Comprehensive Health Records')" title="Comprehensive Health Records"></div>
+        <div class="absolute top-[20.7%] left-[50.6%] w-[20.8%] h-[4.7%] rounded-2xl cursor-pointer z-30 hover-glow" onmouseenter="pauseCardAutoplay(); activateHealthCard(2)" onmouseleave="resumeCardAutoplay(); resetHealthCard()" onclick="openBooking('Online & Chamber Care')" title="Online & Chamber Care"></div>
+        <div class="absolute top-[20.7%] left-[72.5%] w-[20.8%] h-[4.7%] rounded-2xl cursor-pointer z-30 hover-glow" onmouseenter="pauseCardAutoplay(); activateHealthCard(3)" onmouseleave="resumeCardAutoplay(); resetHealthCard()" onclick="openBooking('Medicine Home Delivery')" title="Medicine Home Delivery"></div>
 
         <!-- 9. Doctor Dashboard App Hotspot -->
         <a href="javascript:void(0)" onclick="openBooking('Homeoly Mobile App')" title="Mobile App Consultation" class="absolute top-[30.5%] left-[9.5%] w-[45%] h-[9.5%] rounded-3xl cursor-pointer hover:ring-2 hover:ring-primary/40 transition z-30"></a>
@@ -364,7 +366,26 @@
         }
     }
 
-    // 4. Healthcare Carousel Cards Active Hover Styles
+    // 4. Healthcare Carousel Cards Auto-Play & Arrow State
+    let cardAutoplayTimer = null;
+    let currentActiveCard = -1; // -1 means none active by default unless hovered/cycling
+
+    function setHealthArrowHover(direction, isHover) {
+        const svgDoc = getSvgDoc();
+        if (!svgDoc) return;
+        if (direction === 'left') {
+            const leftArrow = svgDoc.getElementById('health_card_left_arrow');
+            if (leftArrow) {
+                leftArrow.setAttribute('fill', isHover ? '#00A746' : '#D0D0D0');
+            }
+        } else if (direction === 'right') {
+            const rightArrow = svgDoc.getElementById('health_card_arrow_fill');
+            if (rightArrow) {
+                rightArrow.setAttribute('fill', isHover ? '#20CB68' : '#00A746');
+            }
+        }
+    }
+
     function activateHealthCard(index) {
         const svgDoc = getSvgDoc();
         if (!svgDoc) return;
@@ -372,11 +393,7 @@
         for (let i = 0; i < 4; i++) {
             const card = svgDoc.getElementById('health_card_bg_' + i);
             if (card) {
-                if (i === index) {
-                    card.setAttribute('fill', '#D9F2E3');
-                } else {
-                    card.setAttribute('fill', '#F9F9F9');
-                }
+                card.setAttribute('fill', i === index ? '#D9F2E3' : '#F9F9F9');
             }
         }
     }
@@ -384,30 +401,66 @@
     function resetHealthCard() {
         const svgDoc = getSvgDoc();
         if (!svgDoc) return;
-        // Restore design default state (Card 1 active in original design)
+        // All cards return to default #F9F9F9 when hover is removed
         for (let i = 0; i < 4; i++) {
             const card = svgDoc.getElementById('health_card_bg_' + i);
             if (card) {
-                card.setAttribute('fill', i === 1 ? '#D9F2E3' : '#F9F9F9');
+                card.setAttribute('fill', '#F9F9F9');
             }
         }
     }
 
+    // Move constantly from right to left (cards continuous progression)
     function scrollHealthcareRight() {
+        // Move to next card (simulating progression from right to left)
+        currentActiveCard = (currentActiveCard + 1) % 4;
+        activateHealthCard(currentActiveCard);
+
         const svgDoc = getSvgDoc();
-        if (!svgDoc) return;
-        const arrow = svgDoc.getElementById('health_card_arrow_fill');
-        if (arrow) {
-            arrow.setAttribute('fill', '#20CB68');
-            setTimeout(() => arrow.setAttribute('fill', '#00A746'), 300);
+        const rightArrow = svgDoc ? svgDoc.getElementById('health_card_arrow_fill') : null;
+        if (rightArrow) {
+            rightArrow.setAttribute('fill', '#20CB68');
+            setTimeout(() => rightArrow.setAttribute('fill', '#00A746'), 300);
         }
-        // Cycle active card to indicate horizontal scrolling
-        const currentActive = [0, 1, 2, 3].find(i => {
-            const c = svgDoc.getElementById('health_card_bg_' + i);
-            return c && c.getAttribute('fill') === '#D9F2E3';
-        }) ?? 1;
-        activateHealthCard((currentActive + 1) % 4);
     }
+
+    function scrollHealthcareLeft() {
+        currentActiveCard = (currentActiveCard - 1 + 4) % 4;
+        activateHealthCard(currentActiveCard);
+
+        const svgDoc = getSvgDoc();
+        const leftArrow = svgDoc ? svgDoc.getElementById('health_card_left_arrow') : null;
+        if (leftArrow) {
+            leftArrow.setAttribute('fill', '#00A746');
+            setTimeout(() => leftArrow.setAttribute('fill', '#D0D0D0'), 300);
+        }
+    }
+
+    function startCardAutoplay() {
+        if (cardAutoplayTimer) clearInterval(cardAutoplayTimer);
+        // Continuously moves right to left every 2.8 seconds
+        cardAutoplayTimer = setInterval(() => {
+            scrollHealthcareRight();
+        }, 2800);
+    }
+
+    function pauseCardAutoplay() {
+        if (cardAutoplayTimer) {
+            clearInterval(cardAutoplayTimer);
+            cardAutoplayTimer = null;
+        }
+    }
+
+    function resumeCardAutoplay() {
+        startCardAutoplay();
+    }
+
+    // Auto-start continuous carousel when page loads
+    window.addEventListener('DOMContentLoaded', () => {
+        setTimeout(() => {
+            startCardAutoplay();
+        }, 1000);
+    });
 
     // 5. Digital Prescription Steps 1, 2, 3, 4 Active State
     function activateStep(stepNum) {
