@@ -94,11 +94,11 @@
         <div class="absolute top-[37.4%] left-[61.18%] w-[4.43%] h-[1.01%] rounded-xl cursor-pointer z-30" onmouseenter="setDocIconHover(2, true)" onmouseleave="setDocIconHover(2, false)" title="Patient Scheduling & Management"></div>
         <div class="absolute top-[39.9%] left-[61.18%] w-[4.43%] h-[1.01%] rounded-xl cursor-pointer z-30" onmouseenter="setDocIconHover(3, true)" onmouseleave="setDocIconHover(3, false)" title="Instant Digital Prescription"></div>
 
-        <!-- 10. Digital Prescription Interactive Steps (1, 2, 3, 4) with Hover Highlights -->
-        <div class="absolute top-[50.4%] left-[25.2%] w-[5.5%] h-[1.3%] rounded-2xl cursor-pointer z-30 hover-glow" onmouseenter="activateStep(1)" onmouseleave="resetStep()" onclick="activateStep(1); openBooking('Step 1: Patient Health History')" title="Step 1"></div>
-        <div class="absolute top-[50.15%] right-[25.5%] w-[5.5%] h-[1.3%] rounded-2xl cursor-pointer z-30 hover-glow" onmouseenter="activateStep(2)" onmouseleave="resetStep()" onclick="activateStep(2); openBooking('Step 2: Doctor Consultation')" title="Step 2"></div>
-        <div class="absolute top-[55.25%] left-[25.2%] w-[5.5%] h-[1.3%] rounded-2xl cursor-pointer z-30 hover-glow" onmouseenter="activateStep(3)" onmouseleave="resetStep()" onclick="activateStep(3); openBooking('Step 3: Digital Prescription Delivery')" title="Step 3"></div>
-        <div class="absolute top-[54.55%] right-[25.5%] w-[5.5%] h-[1.3%] rounded-2xl cursor-pointer z-30 hover-glow" onmouseenter="activateStep(4)" onmouseleave="resetStep()" onclick="activateStep(4); openBooking('Step 4: Medicine Home Delivery')" title="Step 4"></div>
+        <!-- 10. Digital Prescription Interactive Steps (1, 2, 3, 4) with Hover Highlights (No white background or glow) -->
+        <div class="absolute top-[50.4%] left-[25.2%] w-[5.5%] h-[1.3%] rounded-2xl cursor-pointer z-30" onmouseenter="activateStep(1)" onmouseleave="resetStep()" onclick="activateStep(1); openBooking('Step 1: Patient Health History')" title="Step 1"></div>
+        <div class="absolute top-[50.15%] right-[25.5%] w-[5.5%] h-[1.3%] rounded-2xl cursor-pointer z-30" onmouseenter="activateStep(2)" onmouseleave="resetStep()" onclick="activateStep(2); openBooking('Step 2: Doctor Consultation')" title="Step 2"></div>
+        <div class="absolute top-[55.25%] left-[25.2%] w-[5.5%] h-[1.3%] rounded-2xl cursor-pointer z-30" onmouseenter="activateStep(3)" onmouseleave="resetStep()" onclick="activateStep(3); openBooking('Step 3: Digital Prescription Delivery')" title="Step 3"></div>
+        <div class="absolute top-[54.55%] right-[25.5%] w-[5.5%] h-[1.3%] rounded-2xl cursor-pointer z-30" onmouseenter="activateStep(4)" onmouseleave="resetStep()" onclick="activateStep(4); openBooking('Step 4: Medicine Home Delivery')" title="Step 4"></div>
 
         <!-- 11. "Download App Manual" Button -->
         <a href="{{ asset('assets/Homeoly_User_Manual.pdf') }}" target="_blank" download="Homeoly_App_Manual.pdf" title="Download App Manual" class="absolute top-[66.0%] left-[6.7%] w-[21.7%] h-[1.1%] rounded-xl cursor-pointer hover:ring-2 hover:ring-primary/60 transition z-30"></a>
@@ -524,6 +524,7 @@
             paths.forEach(p => p.setAttribute('fill', '#00A746'));
         }
     }
+    // 6. Digital Prescription Steps 1, 2, 3, 4 Hover Actions
     function activateStep(stepNum) {
         const svgDoc = getSvgDoc();
         if (!svgDoc) return;
@@ -544,17 +545,12 @@
     function resetStep() {
         const svgDoc = getSvgDoc();
         if (!svgDoc) return;
-        // Default: Step 1 is active in design
+        // Default: All steps are in normal un-hovered state (#E6F6ED, num #007D35)
         for (let s = 1; s <= 4; s++) {
             const bg = svgDoc.getElementById('step_bg_' + s);
             const num = svgDoc.getElementById('step_num_' + s);
-            if (s === 1) {
-                if (bg) bg.setAttribute('fill', '#00A746');
-                if (num) num.setAttribute('fill', 'white');
-            } else {
-                if (bg) bg.setAttribute('fill', '#E6F6ED');
-                if (num) num.setAttribute('fill', '#007D35');
-            }
+            if (bg) bg.setAttribute('fill', '#E6F6ED');
+            if (num) num.setAttribute('fill', '#007D35');
         }
     }
 
