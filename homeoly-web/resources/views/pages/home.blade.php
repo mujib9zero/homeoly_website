@@ -407,10 +407,16 @@
             cardGroup.style.transform = `translateX(${translateX}px)`;
             cardGroup.style.opacity = '1';
 
-            // Slot 1 is the currently active/centered card in the carousel
-            // Only the card in Slot 1 gets active green color; all others are normal #F9F9F9
+            // Slot 1 is the currently active/centered card in the carousel:
+            // Gets active green background (#D9F2E3) AND subtle downward card shadow (drop-shadow-md)!
             if (cardBg) {
-                cardBg.setAttribute('fill', currentSlot === 1 ? '#D9F2E3' : '#F9F9F9');
+                if (currentSlot === 1) {
+                    cardBg.setAttribute('fill', '#D9F2E3');
+                    cardBg.style.filter = 'drop-shadow(3px 8px 12px rgba(0, 167, 70, 0.18))';
+                } else {
+                    cardBg.setAttribute('fill', '#F9F9F9');
+                    cardBg.style.filter = 'none';
+                }
             }
         }
     }
@@ -427,9 +433,16 @@
                 if (cardBg) {
                     if (isHover) {
                         cardBg.setAttribute('fill', '#D9F2E3');
+                        cardBg.style.filter = 'drop-shadow(3px 8px 12px rgba(0, 167, 70, 0.18))';
                     } else {
-                        // Return to normal (Slot 1 remains active green, others normal #F9F9F9)
-                        cardBg.setAttribute('fill', currentSlot === 1 ? '#D9F2E3' : '#F9F9F9');
+                        // Return to normal (Slot 1 remains active green with shadow, others normal #F9F9F9)
+                        if (currentSlot === 1) {
+                            cardBg.setAttribute('fill', '#D9F2E3');
+                            cardBg.style.filter = 'drop-shadow(3px 8px 12px rgba(0, 167, 70, 0.18))';
+                        } else {
+                            cardBg.setAttribute('fill', '#F9F9F9');
+                            cardBg.style.filter = 'none';
+                        }
                     }
                 }
                 break;
