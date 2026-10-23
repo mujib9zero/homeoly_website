@@ -366,8 +366,10 @@
         }
     }
 
-    // 4. Healthcare Carousel Cards Auto-Play & Arrow State
+    // 4. Healthcare Carousel Cards Auto-Play & Seamless Circular Movement
     let cardAutoplayTimer = null;
+    let cardShiftIndex = 0; // Tracks cycle step 0, 1, 2, 3
+    const CARD_STEP_X = 264; // Horizontal gap between cards in Figma (345 - 81 = 264)
 
     function setHealthArrowHover(direction, isHover) {
         const svgDoc = getSvgDoc();
@@ -380,38 +382,46 @@
         } else if (direction === 'right') {
             const rightArrow = svgDoc.getElementById('health_card_arrow_fill');
             if (rightArrow) {
-                // Default unhovered: #D0D0D0, Hover: #00A746
                 rightArrow.setAttribute('fill', isHover ? '#00A746' : '#D0D0D0');
             }
         }
     }
 
-    function activateHealthCard(index) {
+    // Renders the 4 cards at their circular positions so they loop continuously:
+    // Leftmost card moves left and reappears from the right!
+    function renderCardPositions(animated = true) {
         const svgDoc = getSvgDoc();
         if (!svgDoc) return;
 
         for (let i = 0; i < 4; i++) {
-            const card = svgDoc.getElementById('health_card_bg_' + i);
-            if (card) {
-                card.setAttribute('fill', i === index ? '#D9F2E3' : '#F9F9F9');
+            const cardGroup = svgDoc.getElementById('health_card_group_' + i);
+            const cardBg = svgDoc.getElementById('health_card_bg_' + i);
+            if (!cardGroup) continue;
+
+            // Compute circular slot position (0 = Slot 0, 1 = Slot 1 [Active], 2 = Slot 2, 3 = Slot 3)
+            const currentSlot = (i - cardShiftIndex % 4 + 4) % 4;
+            const shiftCount = currentSlot - i;
+            const translateX = shiftCount * CARD_STEP_X;
+
+            cardGroup.style.transition = animated ? 'transform 0.65s cubic-bezier(0.25, 1, 0.5, 1)' : 'none';
+            cardGroup.style.transform = `translateX(${translateX}px)`;
+
+            // The card currently occupying Slot 1 (Position of "ব্যাপক স্বাস্থ্য নথি") is ALWAYS Active!
+            if (cardBg) {
+                if (currentSlot === 1) {
+                    cardBg.setAttribute('fill', '#D9F2E3');
+                } else {
+                    cardBg.setAttribute('fill', '#F9F9F9');
+                }
             }
         }
     }
 
-    function resetHealthCard() {
-        const svgDoc = getSvgDoc();
-        if (!svgDoc) return;
-        // The active card is ALWAYS in position 1 ("ব্যাপক স্বাস্থ্য নথি" position) with #D9F2E3
-        for (let i = 0; i < 4; i++) {
-            const card = svgDoc.getElementById('health_card_bg_' + i);
-            if (card) {
-                card.setAttribute('fill', i === 1 ? '#D9F2E3' : '#F9F9F9');
-            }
-        }
-    }
-
-    // Move constantly from right to left (cards continuous progression)
+    // Continuous movement: Cards shift from right to left (entering left and wrapping around from right)
     function scrollHealthcareRight() {
+        cardShiftIndex++;
+        renderCardPositions(true);
+
         const svgDoc = getSvgDoc();
         const rightArrow = svgDoc ? svgDoc.getElementById('health_card_arrow_fill') : null;
         if (rightArrow) {
@@ -421,6 +431,9 @@
     }
 
     function scrollHealthcareLeft() {
+        cardShiftIndex--;
+        renderCardPositions(true);
+
         const svgDoc = getSvgDoc();
         const leftArrow = svgDoc ? svgDoc.getElementById('health_card_left_arrow') : null;
         if (leftArrow) {
@@ -429,12 +442,24 @@
         }
     }
 
+    function activateHealthCard(index) {
+        // Direct hover on card temporarily highlights it
+        const svgDoc = getSvgDoc();
+        if (!svgDoc) return;
+        const cardBg = svgDoc.getElementById('health_card_bg_' + index);
+        if (cardBg) cardBg.setAttribute('fill', '#D9F2E3');
+    }
+
+    function resetHealthCard() {
+        renderCardPositions(false);
+    }
+
     function startCardAutoplay() {
         if (cardAutoplayTimer) clearInterval(cardAutoplayTimer);
-        // Continuously triggers progression every 2.8 seconds
+        // Continuously moves from right to left every 3 seconds
         cardAutoplayTimer = setInterval(() => {
             scrollHealthcareRight();
-        }, 2800);
+        }, 3000);
     }
 
     function pauseCardAutoplay() {
