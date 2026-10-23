@@ -368,7 +368,6 @@
 
     // 4. Healthcare Carousel Cards Auto-Play & Arrow State
     let cardAutoplayTimer = null;
-    let currentActiveCard = -1; // -1 means none active by default unless hovered/cycling
 
     function setHealthArrowHover(direction, isHover) {
         const svgDoc = getSvgDoc();
@@ -381,7 +380,8 @@
         } else if (direction === 'right') {
             const rightArrow = svgDoc.getElementById('health_card_arrow_fill');
             if (rightArrow) {
-                rightArrow.setAttribute('fill', isHover ? '#20CB68' : '#00A746');
+                // Default unhovered: #D0D0D0, Hover: #00A746
+                rightArrow.setAttribute('fill', isHover ? '#00A746' : '#D0D0D0');
             }
         }
     }
@@ -401,33 +401,26 @@
     function resetHealthCard() {
         const svgDoc = getSvgDoc();
         if (!svgDoc) return;
-        // All cards return to default #F9F9F9 when hover is removed
+        // The active card is ALWAYS in position 1 ("ব্যাপক স্বাস্থ্য নথি" position) with #D9F2E3
         for (let i = 0; i < 4; i++) {
             const card = svgDoc.getElementById('health_card_bg_' + i);
             if (card) {
-                card.setAttribute('fill', '#F9F9F9');
+                card.setAttribute('fill', i === 1 ? '#D9F2E3' : '#F9F9F9');
             }
         }
     }
 
     // Move constantly from right to left (cards continuous progression)
     function scrollHealthcareRight() {
-        // Move to next card (simulating progression from right to left)
-        currentActiveCard = (currentActiveCard + 1) % 4;
-        activateHealthCard(currentActiveCard);
-
         const svgDoc = getSvgDoc();
         const rightArrow = svgDoc ? svgDoc.getElementById('health_card_arrow_fill') : null;
         if (rightArrow) {
-            rightArrow.setAttribute('fill', '#20CB68');
-            setTimeout(() => rightArrow.setAttribute('fill', '#00A746'), 300);
+            rightArrow.setAttribute('fill', '#00A746');
+            setTimeout(() => rightArrow.setAttribute('fill', '#D0D0D0'), 300);
         }
     }
 
     function scrollHealthcareLeft() {
-        currentActiveCard = (currentActiveCard - 1 + 4) % 4;
-        activateHealthCard(currentActiveCard);
-
         const svgDoc = getSvgDoc();
         const leftArrow = svgDoc ? svgDoc.getElementById('health_card_left_arrow') : null;
         if (leftArrow) {
@@ -438,7 +431,7 @@
 
     function startCardAutoplay() {
         if (cardAutoplayTimer) clearInterval(cardAutoplayTimer);
-        // Continuously moves right to left every 2.8 seconds
+        // Continuously triggers progression every 2.8 seconds
         cardAutoplayTimer = setInterval(() => {
             scrollHealthcareRight();
         }, 2800);
