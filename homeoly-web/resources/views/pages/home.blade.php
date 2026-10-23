@@ -96,19 +96,18 @@
 
         <!-- 10. Digital Prescription Interactive Steps (1, 2, 3, 4) with Hover Highlights (No white background or glow) -->
         <div class="absolute top-[50.4%] left-[25.2%] w-[5.5%] h-[1.3%] rounded-2xl cursor-pointer z-30" onmouseenter="activateStep(1)" onmouseleave="resetStep()" onclick="activateStep(1); openBooking('Step 1: Patient Health History')" title="Step 1"></div>
-        <div class="absolute top-[50.15%] right-[25.5%] w-[5.5%] h-[1.3%] rounded-2xl cursor-pointer z-30" onmouseenter="activateStep(2)" onmouseleave="resetStep()" onclick="activateStep(2); openBooking('Step 2: Doctor Consultation')" title="Step 2"></div>
+        <div class="absolute top-[50.4%] right-[25.5%] w-[5.5%] h-[1.3%] rounded-2xl cursor-pointer z-30" onmouseenter="activateStep(2)" onmouseleave="resetStep()" onclick="activateStep(2); openBooking('Step 2: Doctor Consultation')" title="Step 2"></div>
         <div class="absolute top-[55.25%] left-[25.2%] w-[5.5%] h-[1.3%] rounded-2xl cursor-pointer z-30" onmouseenter="activateStep(3)" onmouseleave="resetStep()" onclick="activateStep(3); openBooking('Step 3: Digital Prescription Delivery')" title="Step 3"></div>
-        <div class="absolute top-[54.55%] right-[25.5%] w-[5.5%] h-[1.3%] rounded-2xl cursor-pointer z-30" onmouseenter="activateStep(4)" onmouseleave="resetStep()" onclick="activateStep(4); openBooking('Step 4: Medicine Home Delivery')" title="Step 4"></div>
+        <div class="absolute top-[55.25%] right-[25.5%] w-[5.5%] h-[1.3%] rounded-2xl cursor-pointer z-30" onmouseenter="activateStep(4)" onmouseleave="resetStep()" onclick="activateStep(4); openBooking('Step 4: Medicine Home Delivery')" title="Step 4"></div>
 
         <!-- 11. "Download App Manual" Button -->
-        <a href="{{ asset('assets/Homeoly_User_Manual.pdf') }}" target="_blank" download="Homeoly_App_Manual.pdf" title="Download App Manual" class="absolute top-[66.0%] left-[6.7%] w-[21.7%] h-[1.1%] rounded-xl cursor-pointer hover:ring-2 hover:ring-primary/60 transition z-30"></a>
+        <a href="{{ asset('assets/Homeoly_User_Manual.pdf') }}" target="_blank" download="Homeoly_App_Manual.pdf" title="Download App Manual" class="absolute top-[66.07%] left-[6.64%] w-[21.68%] h-[1.06%] rounded-xl cursor-pointer hover:opacity-90 transition z-30"></a>
 
         <!-- 12. REAL-TIME SYNCHRONIZED 360° VIDEO PLAYER COMPONENT -->
         <div id="guide-video-player" class="absolute top-[61.53%] left-[58.39%] w-[34.80%] h-[6.85%] select-none z-30">
             <div class="relative w-full h-full rounded-[10px] overflow-hidden bg-black shadow-lg">
                 <!-- SVG Animated Border Stroke (Runs 360° with video, pauses when paused, completes on end) -->
                 <svg class="video-progress-border" viewBox="0 0 419 362" preserveAspectRatio="none">
-                    <rect x="2" y="2" width="415" height="358" rx="8" ry="8" fill="none" stroke="#D1EADE" stroke-width="4" />
                     <rect id="videoProgressStroke" pathLength="100" x="2" y="2" width="415" height="358" rx="8" ry="8" fill="none" stroke="#00A746" stroke-width="4" stroke-dasharray="100" stroke-dashoffset="100" />
                 </svg>
 
@@ -127,30 +126,57 @@
             </div>
         </div>
 
-        <!-- 13. Service Reliability Accordion Question Hotspots (Item 1 is default expanded) -->
-        <div class="absolute top-[75.0%] right-[7.0%] w-[60.0%] h-[1.0%] cursor-pointer z-30" onclick="toggleFaqAccordion(0)" title="FAQ Item 1"></div>
-        <div class="absolute top-[78.8%] right-[7.0%] w-[60.0%] h-[1.0%] cursor-pointer z-30" onclick="toggleFaqAccordion(1)" title="FAQ Item 2"></div>
-        <div class="absolute top-[80.0%] right-[7.0%] w-[60.0%] h-[1.0%] cursor-pointer z-30" onclick="toggleFaqAccordion(2)" title="FAQ Item 3"></div>
-        <div class="absolute top-[82.0%] right-[7.0%] w-[60.0%] h-[1.0%] cursor-pointer z-30" onclick="toggleFaqAccordion(3)" title="FAQ Item 4"></div>
-        <div class="absolute top-[83.1%] right-[7.0%] w-[60.0%] h-[1.0%] cursor-pointer z-30" onclick="toggleFaqAccordion(4)" title="FAQ Item 5"></div>
+        <!-- 13. FAQ Arrow Hotspots (Only the arrow icons are clickable) -->
+        <div id="faq_hotspot_0" class="absolute top-[74.90%] left-[88.77%] w-[3.65%] h-[0.68%] cursor-pointer z-30 transition-all duration-300" onclick="toggleFaqAccordion(0)" title="FAQ Item 1 Arrow"></div>
+        <div id="faq_hotspot_1" class="absolute top-[78.62%] left-[88.80%] w-[3.65%] h-[0.68%] cursor-pointer z-30 transition-all duration-300" onclick="toggleFaqAccordion(1)" title="FAQ Item 2 Arrow"></div>
+        <div id="faq_hotspot_2" class="absolute top-[79.77%] left-[88.80%] w-[3.65%] h-[0.68%] cursor-pointer z-30 transition-all duration-300" onclick="toggleFaqAccordion(2)" title="FAQ Item 3 Arrow"></div>
+        <div id="faq_hotspot_3" class="absolute top-[81.59%] left-[88.66%] w-[3.65%] h-[0.68%] cursor-pointer z-30 transition-all duration-300" onclick="toggleFaqAccordion(3)" title="FAQ Item 4 Arrow"></div>
+        <div id="faq_hotspot_4" class="absolute top-[82.73%] left-[88.66%] w-[3.65%] h-[0.68%] cursor-pointer z-30 transition-all duration-300" onclick="toggleFaqAccordion(4)" title="FAQ Item 5 Arrow"></div>
 
         <!-- 14. Download App Links (Google Play & App Store) -->
-        <div id="download-section" class="absolute top-[91.4%] left-[6.7%] w-[32%] h-[1.3%] z-20 pointer-events-none"></div>
-        <a href="https://play.google.com/store" target="_blank" title="Download on Google Play" class="absolute top-[91.4%] left-[6.7%] w-[15%] h-[1.3%] rounded-xl hover:ring-2 hover:ring-primary/50 transition z-30"></a>
-        <a href="https://www.apple.com/app-store/" target="_blank" title="Download on App Store" class="absolute top-[91.4%] left-[23.1%] w-[15%] h-[1.3%] rounded-xl hover:ring-2 hover:ring-primary/50 transition z-30"></a>
+        <div id="download-section" class="absolute top-[91.42%] left-[6.67%] w-[32%] h-[1.25%] z-20 pointer-events-none"></div>
+        <a href="https://play.google.com/store/apps" target="_blank" title="Download on Google Play"
+           onmouseenter="setDownloadBtnHover('google_play', true)"
+           onmouseleave="setDownloadBtnHover('google_play', false)"
+           class="absolute top-[91.42%] left-[6.67%] w-[14.83%] h-[1.23%] rounded-xl transition-all duration-300 z-30 cursor-pointer"></a>
+        <a href="https://www.apple.com/app-store/" target="_blank" title="Download on App Store"
+           onmouseenter="setDownloadBtnHover('app_store', true)"
+           onmouseleave="setDownloadBtnHover('app_store', false)"
+           class="absolute top-[91.41%] left-[23.17%] w-[14.83%] h-[1.23%] rounded-xl transition-all duration-300 z-30 cursor-pointer"></a>
 
-        <!-- 15. Footer Social Icons (Direct platform links) -->
-        <a href="https://facebook.com" target="_blank" title="Facebook" class="absolute top-[97.0%] left-[6.8%] w-[3.4%] h-[0.8%] rounded-xl hover:ring-2 hover:ring-primary/60 transition z-30"></a>
-        <a href="https://twitter.com" target="_blank" title="Twitter / X" class="absolute top-[97.0%] left-[11.4%] w-[3.4%] h-[0.8%] rounded-xl hover:ring-2 hover:ring-primary/60 transition z-30"></a>
-        <a href="https://instagram.com" target="_blank" title="Instagram" class="absolute top-[97.0%] left-[16.0%] w-[3.4%] h-[0.8%] rounded-xl hover:ring-2 hover:ring-primary/60 transition z-30"></a>
-        <a href="https://linkedin.com" target="_blank" title="LinkedIn" class="absolute top-[97.0%] left-[20.6%] w-[3.4%] h-[0.8%] rounded-xl hover:ring-2 hover:ring-primary/60 transition z-30"></a>
+        <!-- 15. Footer Social Icons (Direct platform links with interactive hover) -->
+        <a href="https://facebook.com/homeoly" target="_blank" title="Facebook"
+           onmouseenter="setSocialIconHover('fb', true)"
+           onmouseleave="setSocialIconHover('fb', false)"
+           class="absolute top-[96.97%] left-[6.87%] w-[3.33%] h-[0.76%] rounded-xl transition-all duration-300 z-30 cursor-pointer"></a>
+        <a href="https://instagram.com/homeoly" target="_blank" title="Instagram"
+           onmouseenter="setSocialIconHover('insta', true)"
+           onmouseleave="setSocialIconHover('insta', false)"
+           class="absolute top-[96.97%] left-[11.46%] w-[3.33%] h-[0.76%] rounded-xl transition-all duration-300 z-30 cursor-pointer"></a>
+        <a href="https://twitter.com/homeoly" target="_blank" title="Twitter / X"
+           onmouseenter="setSocialIconHover('twitter', true)"
+           onmouseleave="setSocialIconHover('twitter', false)"
+           class="absolute top-[96.97%] left-[16.04%] w-[3.33%] h-[0.76%] rounded-xl transition-all duration-300 z-30 cursor-pointer"></a>
+        <a href="https://linkedin.com/company/homeoly" target="_blank" title="LinkedIn"
+           onmouseenter="setSocialIconHover('linkedin', true)"
+           onmouseleave="setSocialIconHover('linkedin', false)"
+           class="absolute top-[96.97%] left-[20.62%] w-[3.33%] h-[0.76%] rounded-xl transition-all duration-300 z-30 cursor-pointer"></a>
 
         <!-- 16. Footer Newsletter Subscription Form -->
-        <form action="{{ route('newsletter.subscribe') }}" method="POST" class="absolute top-[97.2%] right-[6.8%] w-[15.1%] h-[0.78%] z-30 flex items-center">
+        <form action="{{ route('newsletter.subscribe') }}" method="POST"
+              class="absolute top-[97.18%] left-[78.33%] w-[15.13%] h-[0.76%] z-30 flex items-center">
             @csrf
-            <input type="email" name="email" required placeholder="Enter email address" class="w-full h-full pl-3 pr-8 rounded-l-md bg-transparent text-xs text-text-dark placeholder:text-gray-400 outline-none border-none font-medium">
-            <button type="submit" title="Subscribe" class="w-9 h-full flex items-center justify-center text-white hover:opacity-90 transition cursor-pointer">
-                <i class="fa-solid fa-chevron-right text-xs"></i>
+            <input type="email" name="email" id="footerNewsletterEmail" required
+                   placeholder="Email address"
+                   onfocus="handleNewsletterFocus(true)"
+                   onblur="handleNewsletterFocus(false)"
+                   oninput="handleNewsletterInput(this.value)"
+                   class="w-[82%] h-full pl-3 pr-2 rounded-l-md bg-transparent text-[11px] sm:text-xs text-text-dark placeholder:text-transparent outline-none border-none font-medium z-30">
+            <button type="submit" id="footerNewsletterSubmitBtn" title="Subscribe"
+                    onmouseenter="setNewsletterBtnHover(true)"
+                    onmouseleave="setNewsletterBtnHover(false)"
+                    class="w-[18%] h-full flex items-center justify-center opacity-0 cursor-pointer z-30">
+                <span class="sr-only">Subscribe</span>
             </button>
         </form>
     </div>
@@ -554,9 +580,150 @@
         }
     }
 
-    // 6. Service Reliability Accordion Toggle
+    // 6. Service Reliability Accordion In-Place Multi-Expand Toggle
+    // User Requirements:
+    // 1) By default, ALL answers are collapsed (closed).
+    // 2) Multi-expand: multiple items can be opened simultaneously without overflow or colliding.
+    // 3) Section 2 headline ("প্রেসক্রিপশন সম্পর্কিত প্রশ্ন") on left and Section 2 Question 1 ("প্রেসক্রিপশন কতদিন এপে সংরক্ষিত থাকবে?") on right MUST ALWAYS remain horizontally aligned across all states.
+    // 4) Arrows are the only clickable element (no popup modal).
+
+    let faqOpen = [false, false, false, false, false];
+
+    const FAQ_ARROW_CENTERS = [
+        { cx: 1090.82, cy: 3977.28 },
+        { cx: 1091.16, cy: 4174.08 },
+        { cx: 1091.16, cy: 4234.39 },
+        { cx: 1089.41, cy: 4330.73 },
+        { cx: 1089.41, cy: 4391.06 }
+    ];
+
+    // Base top percentages in the Figma SVG coordinate space (when deltaY = 0)
+    const FAQ_HOTSPOT_BASE_TOPS = [
+        74.90, // Item 0 (fixed in place)
+        78.62, // Item 1
+        79.77, // Item 2
+        81.59, // Item 3
+        82.73  // Item 4
+    ];
+    const SVG_TOTAL_HEIGHT = 5286;
+
     function toggleFaqAccordion(index) {
-        showFaqModal(index);
+        faqOpen[index] = !faqOpen[index];
+        updateFaqSvgState();
+    }
+
+    function updateFaqSvgState() {
+        const svgDoc = getSvgDoc();
+        if (!svgDoc) return;
+
+        // 1. Toggle display and opacity of all 5 answer panels
+        for (let i = 0; i < 5; i++) {
+            const ans = svgDoc.getElementById('faq_answer_' + i);
+            if (!ans) continue;
+
+            if (faqOpen[i]) {
+                ans.style.display = '';
+                ans.style.opacity = '1';
+            } else {
+                ans.style.display = 'none';
+                ans.style.opacity = '0';
+            }
+        }
+
+        // 2. Multi-expand vertical translation math
+        // In the original SVG geometry:
+        // - Item 0 was drawn open (+136px space reserved).
+        // - Items 1..4 were drawn closed (0px space reserved).
+        //
+        // dy_1: below item 0. If item 0 is open, dy=0. If closed, dy = -136.
+        const dy_1 = (faqOpen[0] ? 0 : -136);
+
+        // dy_2: below item 0 and item 1.
+        const dy_2 = dy_1 + (faqOpen[1] ? 136 : 0);
+
+        // Section 2 starts below item 0, item 1, and item 2:
+        // Both Section 2 Headline on left (faq_prescription_title) AND Question 3 on right (faq_item_group_3)
+        // MUST shift by the EXACT SAME dy_section2 so they remain strictly horizontal and never misalign.
+        const dy_section2 = dy_2 + (faqOpen[2] ? 136 : 0);
+        const dy_prescription_title = dy_section2;
+        const dy_3 = dy_section2;
+
+        // dy_4: below item 3.
+        const dy_4 = dy_section2 + (faqOpen[3] ? 136 : 0);
+
+        // dy_footer: below all items.
+        const dy_footer = dy_4 + (faqOpen[4] ? 136 : 0);
+
+        // Apply SVG translations
+        const elGroup1 = svgDoc.getElementById('faq_item_group_1');
+        const elGroup2 = svgDoc.getElementById('faq_item_group_2');
+        const elPrescriptionTitle = svgDoc.getElementById('faq_prescription_title');
+        const elGroup3 = svgDoc.getElementById('faq_item_group_3');
+        const elGroup4 = svgDoc.getElementById('faq_item_group_4');
+        const elFooter = svgDoc.getElementById('faq_footer_group');
+
+        if (elGroup1) elGroup1.style.transform = `translate(0, ${dy_1}px)`;
+        if (elGroup2) elGroup2.style.transform = `translate(0, ${dy_2}px)`;
+        if (elPrescriptionTitle) elPrescriptionTitle.style.transform = `translate(0, ${dy_prescription_title}px)`;
+        if (elGroup3) elGroup3.style.transform = `translate(0, ${dy_3}px)`;
+        if (elGroup4) elGroup4.style.transform = `translate(0, ${dy_4}px)`;
+        if (elFooter) elFooter.style.transform = `translate(0, ${dy_footer}px)`;
+
+        // 3. Update overlay hotspot positions so the clickable arrow areas follow their corresponding questions
+        const dyMap = [0, dy_1, dy_2, dy_3, dy_4];
+        for (let i = 0; i < 5; i++) {
+            const hotspot = document.getElementById('faq_hotspot_' + i);
+            if (hotspot) {
+                const shiftPercent = (dyMap[i] / SVG_TOTAL_HEIGHT) * 100;
+                const newTop = FAQ_HOTSPOT_BASE_TOPS[i] + shiftPercent;
+                hotspot.style.top = `${newTop.toFixed(3)}%`;
+            }
+        }
+
+        // 4. Update arrow orientations:
+        // Arrow 0 in SVG is drawn pointing UP (opened). When closed (!faqOpen[0]), rotate 180° to point DOWN.
+        // Arrows 1..4 in SVG are drawn pointing DOWN (closed). When opened (faqOpen[i]), rotate 180° to point UP.
+        for (let i = 0; i < 5; i++) {
+            const arrow = svgDoc.getElementById('faq_arrow_' + i);
+            if (!arrow) continue;
+
+            const center = FAQ_ARROW_CENTERS[i];
+            arrow.style.transition = 'transform 0.3s ease';
+
+            if (i === 0) {
+                if (faqOpen[0]) {
+                    arrow.setAttribute('transform', '');
+                } else {
+                    arrow.setAttribute('transform', `rotate(180 ${center.cx} ${center.cy})`);
+                }
+            } else {
+                if (faqOpen[i]) {
+                    arrow.setAttribute('transform', `rotate(180 ${center.cx} ${center.cy})`);
+                } else {
+                    arrow.setAttribute('transform', '');
+                }
+            }
+        }
+    }
+
+    // Call updateFaqSvgState as soon as SVG object loads
+    function initFaqSvgState() {
+        const svgObj = document.getElementById('landingSvgObject');
+        if (svgObj) {
+            if (svgObj.contentDocument && svgObj.contentDocument.getElementById('faq_arrow_0')) {
+                updateFaqSvgState();
+            } else {
+                svgObj.addEventListener('load', () => {
+                    updateFaqSvgState();
+                });
+            }
+        }
+    }
+
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initFaqSvgState);
+    } else {
+        initFaqSvgState();
     }
 
     function showFaqModal(index) {
@@ -630,6 +797,70 @@
         video.addEventListener('play', function () {
             if (overlay) overlay.classList.add('opacity-0', 'pointer-events-none');
         });
+    }
+
+    // 9. Download Buttons Hover Handler
+    function setDownloadBtnHover(type, isHover) {
+        const svgDoc = getSvgDoc();
+        if (!svgDoc) return;
+        const btnId = (type === 'google_play') ? 'btn_google_play_bg' : 'btn_app_store_bg';
+        const rect = svgDoc.getElementById(btnId);
+        if (rect) {
+            rect.setAttribute('fill', isHover ? '#8DE0B1' : '#B0E4C6');
+            rect.style.filter = isHover ? 'drop-shadow(0 4px 10px rgba(0, 167, 70, 0.35))' : '';
+        }
+    }
+
+    // 10. Footer Social Media Icons Hover Handler
+    function setSocialIconHover(platform, isHover) {
+        const svgDoc = getSvgDoc();
+        if (!svgDoc) return;
+        const iconIdMap = {
+            'fb': 'social_fb_bg',
+            'insta': 'social_insta_bg',
+            'twitter': 'social_twitter_bg',
+            'linkedin': 'social_linkedin_bg'
+        };
+        const rect = svgDoc.getElementById(iconIdMap[platform]);
+        if (rect) {
+            rect.setAttribute('fill', isHover ? '#00702F' : '#00A746');
+            rect.style.transformOrigin = 'center';
+            rect.style.filter = isHover ? 'drop-shadow(0 4px 8px rgba(0, 112, 47, 0.45))' : '';
+        }
+    }
+
+    // 11. Footer Newsletter Input & Subscribe Button Handlers
+    function handleNewsletterFocus(isFocused) {
+        const svgDoc = getSvgDoc();
+        if (!svgDoc) return;
+        const placeholder = svgDoc.getElementById('svg_newsletter_placeholder');
+        const input = document.getElementById('footerNewsletterEmail');
+        if (placeholder) {
+            if (isFocused || (input && input.value.trim() !== '')) {
+                placeholder.style.display = 'none';
+            } else {
+                placeholder.style.display = '';
+            }
+        }
+    }
+
+    function handleNewsletterInput(val) {
+        const svgDoc = getSvgDoc();
+        if (!svgDoc) return;
+        const placeholder = svgDoc.getElementById('svg_newsletter_placeholder');
+        if (placeholder) {
+            placeholder.style.display = (val && val.trim().length > 0) ? 'none' : '';
+        }
+    }
+
+    function setNewsletterBtnHover(isHover) {
+        const svgDoc = getSvgDoc();
+        if (!svgDoc) return;
+        const btnBg = svgDoc.getElementById('footer_newsletter_btn_bg');
+        if (btnBg) {
+            btnBg.setAttribute('fill', isHover ? '#00702F' : '#00A746');
+            btnBg.style.filter = isHover ? 'drop-shadow(0 3px 6px rgba(0, 112, 47, 0.45))' : '';
+        }
     }
 </script>
 @endsection
