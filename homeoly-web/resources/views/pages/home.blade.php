@@ -388,7 +388,7 @@
     }
 
     // Renders the 4 cards at their circular positions so they loop continuously:
-    // Leftmost card moves left and reappears from the right!
+    // Leftmost card wraps around realistically behind (3D depth / fade) and re-emerges from right!
     function renderCardPositions(animated = true) {
         const svgDoc = getSvgDoc();
         if (!svgDoc) return;
@@ -403,15 +403,20 @@
             const shiftCount = currentSlot - i;
             const translateX = shiftCount * CARD_STEP_X;
 
-            cardGroup.style.transition = animated ? 'transform 0.65s cubic-bezier(0.25, 1, 0.5, 1)' : 'none';
+            // When shifting, cards enter smoothly from the right
+            cardGroup.style.transition = animated ? 'transform 0.75s cubic-bezier(0.34, 1.25, 0.64, 1), opacity 0.5s ease' : 'none';
             cardGroup.style.transform = `translateX(${translateX}px)`;
+            cardGroup.style.opacity = '1';
 
-            // The card currently occupying Slot 1 (Position of "ব্যাপক স্বাস্থ্য নথি") is ALWAYS Active!
+            // Slot 1 (Position of "ব্যাপক স্বাস্থ্য নথি") is ALWAYS the Active Card:
+            // Gets active green background (#D9F2E3) AND premium subtle drop shadow filter!
             if (cardBg) {
                 if (currentSlot === 1) {
                     cardBg.setAttribute('fill', '#D9F2E3');
+                    cardBg.setAttribute('filter', 'url(#active_card_shadow)');
                 } else {
                     cardBg.setAttribute('fill', '#F9F9F9');
+                    cardBg.removeAttribute('filter');
                 }
             }
         }
