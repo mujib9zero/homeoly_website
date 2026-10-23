@@ -506,7 +506,7 @@
         }, 1000);
     });
 
-    // 5. Doctor Dashboard Feature Icons Hover
+    // 5. Doctor Dashboard Feature Icons Hover (Color transition only, no displacement/movement)
     function setDocIconHover(iconIndex, isHover) {
         const svgDoc = getSvgDoc();
         if (!svgDoc) return;
@@ -519,12 +519,9 @@
         if (isHover) {
             if (rect) rect.setAttribute('fill', '#00A746');
             paths.forEach(p => p.setAttribute('fill', '#FFFFFF'));
-            iconGroup.style.transform = 'scale(1.08)';
-            iconGroup.style.transformOrigin = 'center';
         } else {
             if (rect) rect.setAttribute('fill', '#E6F6ED');
             paths.forEach(p => p.setAttribute('fill', '#00A746'));
-            iconGroup.style.transform = 'scale(1)';
         }
     }
     function activateStep(stepNum) {
