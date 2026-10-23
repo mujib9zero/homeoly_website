@@ -1,0 +1,29 @@
+# Laravel & Application
+homeoly-web/node_modules/
+homeoly-web/vendor/
+homeoly-web/public/build/
+homeoly-web/public/hot
+homeoly-web/public/storage
+homeoly-web/storage/*.key
+homeoly-web/storage/pail
+homeoly-web/.env
+homeoly-web/.env.backup
+homeoly-web/.env.production
+homeoly-web/.phpunit.cache
+homeoly-web/*.log
+
+# Environment & Editor
+.env
+.DS_Store
+Thumbs.db
+*.log
+.vscode/
+.idea/
+
+# Scratch & backup files
+*.py
+*.php
+*.html
+*.blade.php
+cleaned_structure.svg
+extracted_images/
